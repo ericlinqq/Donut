@@ -105,7 +105,7 @@ int main() {
         A += 0.04;
         B += 0.01;
         C += 0.02;
-        usleep(1000);
+        usleep(10000);
     }
     return 0;
 }

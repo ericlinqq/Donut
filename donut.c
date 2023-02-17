@@ -1,3 +1,4 @@
+#include "time.h"
 const float theta_spacing = 0.07;
 const float phi_spacing = 0.02;
 const int screen_width = 80;
@@ -82,14 +83,33 @@ void render_frame(float A, float B) {
 
 int main() {
     float A = 0, B = 0;
+    int c = 17;
+    _Bool change = 1;
+    time_t startTime, endTime, exTime, temp;
 
     printf("\x1b[2J");
-    printf("\x1b[38;5;44m");
-    for(;;) {
+    startTime = time(NULL);
+
+    for(;;) {  
+        if (change) {
+            printf("\x1b[38;5;%dm", c);
+            c++; 
+            if (c > 231) c = 17;
+            change = 0;
+        }
        render_frame(A, B);
+       endTime = time(NULL);
+       temp = endTime - startTime;
+       exTime = (exTime > temp) ? exTime : temp;
+
+       if (!(exTime % 2)) {
+           change = 1;
+           exTime++;
+       }
+        
        A += 0.04;
        B += 0.02; 
-       usleep(10000);
+       usleep(30000);
     }
 
     return 0;
